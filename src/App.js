@@ -1,15 +1,19 @@
 import { useState } from "react";
 
 export default function Board() {
-    const [xIsNext, setXIsNext] = useState(true);
     const [squares, setSquares] = useState(Array(9).fill(null));
+    const [xIsNext, setXIsNext] = useState(true);
+    const [status, setStatus] = useState('Next player: ' + (xIsNext ? 'X' : 'O'));
+    const [xScore, setXScore] = useState(0);
+    const [oScore, setOScore] = useState(0);
 
     function handleClick(i) {
         if (squares[i] || calculateWinner(squares)) return;
         const newSquares = squares.slice();
         xIsNext ? newSquares[i] = 'X' : newSquares[i] = 'O';
-        setSquares(newSquares);
         setXIsNext(!xIsNext);
+        setSquares(newSquares);
+        updateStatus(newSquares, !xIsNext);
     }
 
     function calculateWinner(squares) {
@@ -32,28 +36,37 @@ export default function Board() {
         }
     }
 
-    function checkDraw() {
+    function checkDraw(squares) {
         return squares.every((square) => square !== null);
     }
 
     function resetBoard() {
         setSquares(Array(9).fill(null));
-        setXIsNext(true);
+        setXIsNext(xIsNext ? true : false);
+        setStatus('Next player: ' + (xIsNext ? 'X' : 'O'));
     }
 
-    const winner = calculateWinner(squares);
-    let status;
-    if (winner) {
-        status = 'Winner: ' + winner;
-    } else if (checkDraw()) {
-        status = 'Draw';
-    } else {
-        status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    function updateStatus(squares, xIsNext) {
+        const winner = calculateWinner(squares);
+        let status;
+
+        if (winner) {
+            status = 'Winner: ' + winner;
+            winner === 'X' ? setXScore(xScore + 1) : setOScore(oScore + 1);
+        } else if (checkDraw(squares)) {
+            status = 'Draw';
+        } else {
+            status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+        }
+        setStatus(status);
     }
 
     return (
         <>
             <div className="status">
+                <p className="status-score">
+                    <span>X</span>{`: ${xScore} - ${oScore} :`}<span>O</span>
+                </p>
                 <p className="status-info">{status}</p>
             </div>
             <div className="board">
@@ -73,7 +86,7 @@ export default function Board() {
                     <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
                 </div>
                 {<div onClick={resetBoard}>
-                    <p className="board-reset-btn">Reset</p>
+                    <p className="board-reset-btn">Restart</p>
                 </div>}
             </div>
         </>

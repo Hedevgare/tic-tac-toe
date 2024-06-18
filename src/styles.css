@@ -3,6 +3,8 @@
 body {
     margin: 0;
     font-family: "Roboto Mono", monospace;
+    background-color: #073642;
+    color: #ffffff;
 }
 
 #root {
@@ -12,8 +14,9 @@ body {
 }
 
 .square {
-    background: #fff;
-    border: 1px solid #999;
+    background: #586e75;
+    color: #ffffff;
+    border: 1px solid #ffffff;
     float: left;
     font-size: 90px;
     font-weight: bold;
@@ -50,7 +53,18 @@ body {
     justify-content: end;
 }
 
-.status-info {
+.status-score {
+    display: flex;
+    align-items: center;
     font-size: 40px;
+    margin: 0;
+}
+
+.status-score span {
+    font-size: 60px;
+}
+
+.status-info {
+    font-size: 25px;
     margin-bottom: 40px;
 }
