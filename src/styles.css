@@ -33,11 +33,21 @@ body {
     align-items: center;
 }
 
+.board-reset-btn {
+    margin-top: 40px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: 1px solid #999;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
 .status {
     flex: 1;
     display: flex;
-    align-items: end;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
 }
 
 .status-info {
