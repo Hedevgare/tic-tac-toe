@@ -4,17 +4,37 @@ export default function Board() {
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [winnerMove, setWinnerMove] = useState(Array(3).fill(null));
     const [xIsNext, setXIsNext] = useState(true);
+    const [canPlay, setCanPlay] = useState(true);
     const [status, setStatus] = useState('Next player: ' + (xIsNext ? 'X' : 'O'));
     const [xScore, setXScore] = useState(0);
     const [oScore, setOScore] = useState(0);
 
     function handleClick(i) {
+        if (!canPlay) return;
         if (squares[i] || calculateWinner(squares)) return;
+        setCanPlay(false);
         const newSquares = squares.slice();
-        xIsNext ? newSquares[i] = 'X' : newSquares[i] = 'O';
-        setXIsNext(!xIsNext);
-        setSquares(newSquares);
-        updateStatus(newSquares, !xIsNext);
+        playerPlay(newSquares, i);
+        computerPlay(newSquares);
+    }
+
+    function playerPlay(availableSquares, index) {
+        if (availableSquares[index] || calculateWinner(availableSquares)) return;
+        availableSquares[index] = 'X';
+        setSquares(availableSquares);
+        updateStatus(availableSquares, false);
+    }
+
+    function computerPlay(availableSquares) {
+        if (calculateWinner(availableSquares)) return;
+        setTimeout(() => {
+            const emptySquares = availableSquares.map((square, index) => square === null ? index : null).filter((square) => square !== null);
+            const randomIndex = Math.floor(Math.random() * emptySquares.length);
+            availableSquares[emptySquares[randomIndex]] = 'O';
+            setSquares(availableSquares);
+            updateStatus(availableSquares, true);
+            setCanPlay(true);
+        }, 1000);
     }
 
     function calculateWinner(squares) {
@@ -52,6 +72,8 @@ export default function Board() {
         setXIsNext(xIsNext ? true : false);
         setStatus('Next player: ' + (xIsNext ? 'X' : 'O'));
         setWinnerMove(Array(3).fill(null));
+        setCanPlay(xIsNext ? true : false);
+        if(!xIsNext) computerPlay(Array(9).fill(null));
     }
 
     function updateStatus(squares, xIsNext) {
@@ -67,6 +89,7 @@ export default function Board() {
             status = 'Next player: ' + (xIsNext ? 'X' : 'O');
         }
         setStatus(status);
+        setXIsNext((xIsNext) => !xIsNext);
     }
 
     return (
