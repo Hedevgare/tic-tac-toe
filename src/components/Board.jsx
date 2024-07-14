@@ -1,8 +1,12 @@
 import { useState } from "react";
 import Square from "./Square";
 import { calculateWinner, checkDraw } from "../utils/game";
+import { useLocation, useNavigation } from "react-router-dom";
 
 export default function Board() {
+    const location = useLocation();
+    const { isPvp } = location.state;
+
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [winnerMove, setWinnerMove] = useState(Array(3).fill(null));
     const [xIsNext, setXIsNext] = useState(true);
@@ -17,11 +21,12 @@ export default function Board() {
         setCanPlay(false);
         const newSquares = squares.slice();
         playerPlay(newSquares, i);
-        computerPlay(newSquares);
+
+        isPvp ? setCanPlay(true) : computerPlay(newSquares);
     }
 
     function playerPlay(availableSquares, index) {
-        availableSquares[index] = 'X';
+        availableSquares[index] = isPvp ? (xIsNext ? 'X' : 'O') : 'X';
         setSquares(availableSquares);
         updateStatus(availableSquares, false);
     }
@@ -43,8 +48,10 @@ export default function Board() {
         setXIsNext(xIsNext);
         setStatus('Next player: ' + (xIsNext ? 'X' : 'O'));
         setWinnerMove(Array(3).fill(null));
-        setCanPlay(xIsNext ? true : false);
-        if(!xIsNext) computerPlay(Array(9).fill(null));
+        if (!isPvp && !xIsNext) {
+            setCanPlay(xIsNext ? true : false);
+            computerPlay(Array(9).fill(null));
+        }
     }
 
     function updateStatus(squares, xIsNext) {
