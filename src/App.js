@@ -19,7 +19,6 @@ export default function Board() {
     }
 
     function playerPlay(availableSquares, index) {
-        if (availableSquares[index] || calculateWinner(availableSquares)) return;
         availableSquares[index] = 'X';
         setSquares(availableSquares);
         updateStatus(availableSquares, false);
@@ -69,7 +68,7 @@ export default function Board() {
 
     function resetBoard() {
         setSquares(Array(9).fill(null));
-        setXIsNext(xIsNext ? true : false);
+        setXIsNext(xIsNext);
         setStatus('Next player: ' + (xIsNext ? 'X' : 'O'));
         setWinnerMove(Array(3).fill(null));
         setCanPlay(xIsNext ? true : false);
