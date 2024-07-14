@@ -1,6 +1,6 @@
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client"
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 
 import "./styles.css";
 
@@ -12,12 +12,12 @@ const VERSION = "v0.2.0";
 const root = createRoot(document.getElementById("root"));
 root.render(
     <StrictMode>
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/game" element={<Game />} />
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
         <footer>
             <p>Hedegare 2024 - {VERSION}</p>
         </footer>
