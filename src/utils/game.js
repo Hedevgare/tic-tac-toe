@@ -12,16 +12,17 @@ export function calculateWinner(squares, setWinnerMove) {
             setWinnerMove([i, i + boardSize, i + boardSize * 2]);
             return squares[i];
         }
-        // Check diagonals
-        if (squares[0] && squares[0] === squares[4] && squares[0] === squares[8]) {
-            setWinnerMove([0, 4, 8]);
-            return squares[0];
-        }
-        if (squares[2] && squares[2] === squares[4] && squares[2] === squares[6]) {
-            setWinnerMove([2, 4, 6]);
-            return squares[2];
-        }
     }
+    // Check diagonals
+    if (squares[0] && squares[0] === squares[4] && squares[0] === squares[8]) {
+        setWinnerMove([0, 4, 8]);
+        return squares[0];
+    }
+    if (squares[2] && squares[2] === squares[4] && squares[2] === squares[6]) {
+        setWinnerMove([2, 4, 6]);
+        return squares[2];
+    }
+    return null;
 }
 
 export function checkDraw(squares) {

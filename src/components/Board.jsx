@@ -7,7 +7,10 @@ export default function Board() {
     const location = useLocation();
     const { isPvp } = location.state;
 
+    const testPlay = ["X", "O", null, null, "O", null, null, null, null];
+
     const [squares, setSquares] = useState(Array(9).fill(null));
+    // const [squares, setSquares] = useState(testPlay);
     const [winnerMove, setWinnerMove] = useState(Array(3).fill(null));
     const [xIsNext, setXIsNext] = useState(true);
     const [canPlay, setCanPlay] = useState(true);
@@ -33,14 +36,70 @@ export default function Board() {
 
     function computerPlay(availableSquares) {
         if (calculateWinner(availableSquares, setWinnerMove)) return;
+        
+        const bestMove = findBestOpponentMove(availableSquares);
+        console.log("Best play => ", bestMove + 1);
         setTimeout(() => {
-            const emptySquares = availableSquares.map((square, index) => square === null ? index : null).filter((square) => square !== null);
-            const randomIndex = Math.floor(Math.random() * emptySquares.length);
-            availableSquares[emptySquares[randomIndex]] = 'O';
+            availableSquares[bestMove] = 'O';
             setSquares(availableSquares);
             updateStatus(availableSquares, true);
             setCanPlay(true);
         }, 1000);
+    }
+
+    // Separate the minimax algorithm from the computerPlay function; makes it easier to read and test
+    function findBestOpponentMove(squares) {
+        let bestScore = -Infinity;
+        let bestMove = null;
+
+        for (let i = 0; i < squares.length; i++) {
+            if (squares[i] === null) {
+                squares[i] = 'O';
+                let score = minimax(squares, 0, false);
+                squares[i] = null;
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMove = i;
+                }
+            }
+        }
+        return bestMove;
+    }
+
+    // Recursive minimax algorithm; returns the best score for the current player based on the current board state, a boolean to determine if the current player is maximizing or minimizing, and the depth of the recursion.
+    // The depth parameter ensures that winning sooner is preferred over winning later, and losing later is preferred over losing sooner.
+    function minimax(squares, depth, isMaximizing) {
+        const winner = calculateWinner(squares, () => { });
+        // Calculate score
+        if (winner === 'O') return 10 - depth;
+        if (winner === 'X') return depth - 10;
+        if (checkDraw(squares)) return 0;
+
+        // Maximize for 'O' and minimize for 'X'
+        if (isMaximizing) {
+            let maxScore = -Infinity;
+            for (let i = 0; i < squares.length; i++) {
+                if (squares[i] === null) {
+                    squares[i] = 'O';
+                    let score = minimax(squares, depth + 1, false);
+                    squares[i] = null;
+                    maxScore = Math.max(score, maxScore);
+                }
+            }
+            return maxScore;
+        } else {
+            let minScore = Infinity;
+            for (let i = 0; i < squares.length; i++) {
+                if (squares[i] === null) {
+                    squares[i] = 'X';
+                    let score = minimax(squares, depth + 1, true);
+                    squares[i] = null;
+                    minScore = Math.min(score, minScore);
+                }
+            }
+            return minScore;
+        }
     }
 
     function resetBoard() {
