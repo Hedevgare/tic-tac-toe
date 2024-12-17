@@ -5,12 +5,9 @@ import { useLocation, useNavigation } from "react-router-dom";
 
 export default function Board() {
     const location = useLocation();
-    const { isPvp } = location.state;
-
-    const testPlay = ["X", "O", null, null, "O", null, null, null, null];
+    const { isPvp, hardMode } = location.state;
 
     const [squares, setSquares] = useState(Array(9).fill(null));
-    // const [squares, setSquares] = useState(testPlay);
     const [winnerMove, setWinnerMove] = useState(Array(3).fill(null));
     const [xIsNext, setXIsNext] = useState(true);
     const [canPlay, setCanPlay] = useState(true);
@@ -36,15 +33,25 @@ export default function Board() {
 
     function computerPlay(availableSquares) {
         if (calculateWinner(availableSquares, setWinnerMove)) return;
-        
-        const bestMove = findBestOpponentMove(availableSquares);
-        console.log("Best play => ", bestMove + 1);
-        setTimeout(() => {
-            availableSquares[bestMove] = 'O';
-            setSquares(availableSquares);
-            updateStatus(availableSquares, true);
-            setCanPlay(true);
-        }, 1000);
+
+        if (hardMode) {
+            const bestMove = findBestOpponentMove(availableSquares);
+            setTimeout(() => {
+                availableSquares[bestMove] = 'O';
+                setSquares(availableSquares);
+                updateStatus(availableSquares, true);
+                setCanPlay(true);
+            }, 1000);
+        } else {
+            const emptySquares = availableSquares.map((square, index) => square === null ? index : null).filter((index) => index !== null);
+            const randomIndex = Math.floor(Math.random() * emptySquares.length);
+            setTimeout(() => {
+                availableSquares[emptySquares[randomIndex]] = 'O';
+                setSquares(availableSquares);
+                updateStatus(availableSquares, true);
+                setCanPlay(true);
+            }, 1000);
+        }
     }
 
     // Separate the minimax algorithm from the computerPlay function; makes it easier to read and test
@@ -132,9 +139,15 @@ export default function Board() {
     return (
         <>
             <div className="status">
-                <p className="status-score">
-                    <span>X</span>{`: ${xScore} - ${oScore} :`}<span>O</span>
-                </p>
+                <div className="score-wrapper">
+                    <p className="player-name left">Player&nbsp;{isPvp && '1'}</p>
+                    <p className="status-score">
+                        <span>X</span>{`: ${xScore} - ${oScore} :`}<span>O</span>
+                    </p>
+                    {isPvp ?
+                        <p className="player-name right">Player 2</p> :
+                        <p className="player-name right">Computer {hardMode ? '<Hard Mode>' : '<Easy Mode>'}</p>}
+                </div>
                 <p className="status-info">{status}</p>
             </div>
             <div className="board">

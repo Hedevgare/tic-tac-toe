@@ -7,8 +7,14 @@ body {
     color: #ffffff;
 }
 
-footer {
+header, footer {
     text-align: center;
+}
+
+header {
+    font-size: 25px;
+    border-bottom: 1px solid #ffffff;
+    margin: 0 20px;
 }
 
 a {
@@ -88,7 +94,36 @@ a {
     justify-content: end;
 }
 
+.score-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.player-name {
+    font-size: 20px;
+    margin: 0;
+}
+
+.player-name.left {
+    text-align: right;
+}
+
+.player-name.right {
+    text-align: left;
+}
+
 .status-score {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    margin: 0;
+}
+
+/* .status-score {
     display: flex;
     align-items: center;
     font-size: 40px;
@@ -97,7 +132,7 @@ a {
 
 .status-score span {
     font-size: 60px;
-}
+} */
 
 .status-info {
     font-size: 25px;

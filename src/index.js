@@ -1,6 +1,6 @@
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client"
-import { Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, HashRouter, Link } from "react-router-dom";
 
 import "./styles.css";
 
@@ -13,6 +13,9 @@ const root = createRoot(document.getElementById("root"));
 root.render(
     <StrictMode>
         <HashRouter>
+            <header>
+                <p><Link to="/">TicTacToe</Link></p>
+            </header>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/game" element={<Game />} />
