@@ -7,7 +7,7 @@ import "./styles.css";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
 
-const VERSION = "v0.2.0";
+const VERSION = "v0.3.0";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
