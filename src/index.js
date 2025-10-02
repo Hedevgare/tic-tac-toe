@@ -7,7 +7,7 @@ import "./styles.css";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
 
-const VERSION = "v0.3.0";
+const VERSION = "v0.3.1";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
@@ -22,7 +22,7 @@ root.render(
             </Routes>
         </HashRouter>
         <footer>
-            <p>Hedegare 2024 - {VERSION}</p>
+            <p>Hedegare 2025 - {VERSION}</p>
         </footer>
     </StrictMode>
 );

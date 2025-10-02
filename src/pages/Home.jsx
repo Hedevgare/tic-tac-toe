@@ -15,12 +15,12 @@ export default function Home() {
                     <>
                         <Link to="#" onClick={() => setShowDifficulties(true)}>
                             <div className="menu-item">
-                                Play vs Computer
+                                Play <br /><span className="menu-item-vs">vs</span><br /> Computer
                             </div>
                         </Link>
                         <Link to="/game" state={{ isPvp: true }}>
                             <div className="menu-item">
-                                Play vs Player
+                                Play <br /><span className="menu-item-vs">vs</span><br /> Player
                             </div>
                         </Link>
                     </> : <>

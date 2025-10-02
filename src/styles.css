@@ -41,11 +41,17 @@ a {
     padding: 60px 40px;
     font-size: 40px;
     cursor: pointer;
+    text-align: center;
 }
 
 .menu-item:hover {
     background-color: #002b36;
     border-radius: 25px;
+}
+
+.menu-item-vs {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .menu-header {
@@ -150,4 +156,32 @@ a {
 .status-info {
     font-size: 25px;
     margin-bottom: 40px;
+}
+
+@media screen and (max-width: 500px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .square {
+        font-size: 60px;
+        height: 90px;
+        width: 90px;
+    }
+
+    .status-info {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .player-name {
+        font-size: 12px;
+    }
+
+    .status-score {
+        font-size: 20px;
+    }
 }
