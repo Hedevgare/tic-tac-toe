@@ -86,19 +86,34 @@ a {
 }
 
 .square {
-    background-color: #586e75;
+    background-color: #073642;
     color: #ffffff;
-    border: 1px solid #ffffff;
+    border: 2px solid #ffffff;
     float: left;
     font-size: 90px;
     font-weight: bold;
     line-height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
     padding: 0;
     text-align: center;
     height: 125px;
     width: 125px;
+}
+
+/* These classes need to come after .square so they override the default border width */
+.no-border-top {
+    border-top-width: 0px;
+}
+
+.no-border-right {
+    border-right-width: 0px;
+}
+
+.no-border-bottom {
+    border-bottom-width: 0px;
+}
+
+.no-border-left {
+    border-left-width: 0px;
 }
 
 .winner {
@@ -141,17 +156,6 @@ a {
     font-size: 40px;
     margin: 0;
 }
-
-/* .status-score {
-    display: flex;
-    align-items: center;
-    font-size: 40px;
-    margin: 0;
-}
-
-.status-score span {
-    font-size: 60px;
-} */
 
 .status-info {
     font-size: 25px;

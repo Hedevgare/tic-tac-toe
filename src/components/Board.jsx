@@ -152,19 +152,19 @@ export default function Board() {
             </div>
             <div className="board">
                 <div className="board-row">
-                    <Square isWinner={winnerMove.includes(0)} value={squares[0]} onSquareClick={() => handleClick(0)} />
-                    <Square isWinner={winnerMove.includes(1)} value={squares[1]} onSquareClick={() => handleClick(1)} />
-                    <Square isWinner={winnerMove.includes(2)} value={squares[2]} onSquareClick={() => handleClick(2)} />
+                    <Square borderClasses={"no-border-left no-border-top"} isWinner={winnerMove.includes(0)} value={squares[0]} onSquareClick={() => handleClick(0)} />
+                    <Square borderClasses={"no-border-top"} isWinner={winnerMove.includes(1)} value={squares[1]} onSquareClick={() => handleClick(1)} />
+                    <Square borderClasses={"no-border-top no-border-right"} isWinner={winnerMove.includes(2)} value={squares[2]} onSquareClick={() => handleClick(2)} />
                 </div>
                 <div className="board-row">
-                    <Square isWinner={winnerMove.includes(3)} value={squares[3]} onSquareClick={() => handleClick(3)} />
+                    <Square borderClasses={"no-border-left"} isWinner={winnerMove.includes(3)} value={squares[3]} onSquareClick={() => handleClick(3)} />
                     <Square isWinner={winnerMove.includes(4)} value={squares[4]} onSquareClick={() => handleClick(4)} />
-                    <Square isWinner={winnerMove.includes(5)} value={squares[5]} onSquareClick={() => handleClick(5)} />
+                    <Square borderClasses={"no-border-right"} isWinner={winnerMove.includes(5)} value={squares[5]} onSquareClick={() => handleClick(5)} />
                 </div>
                 <div className="board-row">
-                    <Square isWinner={winnerMove.includes(6)} value={squares[6]} onSquareClick={() => handleClick(6)} />
-                    <Square isWinner={winnerMove.includes(7)} value={squares[7]} onSquareClick={() => handleClick(7)} />
-                    <Square isWinner={winnerMove.includes(8)} value={squares[8]} onSquareClick={() => handleClick(8)} />
+                    <Square borderClasses={"no-border-bottom no-border-left"} isWinner={winnerMove.includes(6)} value={squares[6]} onSquareClick={() => handleClick(6)} />
+                    <Square borderClasses={"no-border-bottom"} isWinner={winnerMove.includes(7)} value={squares[7]} onSquareClick={() => handleClick(7)} />
+                    <Square borderClasses={"no-border-bottom no-border-right"} isWinner={winnerMove.includes(8)} value={squares[8]} onSquareClick={() => handleClick(8)} />
                 </div>
                 {<div onClick={resetBoard}>
                     <p className="board-reset-btn">Restart</p>
