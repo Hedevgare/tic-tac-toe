@@ -1,6 +1,9 @@
 export default function Square({ value, onSquareClick, isWinner, borderClasses }) {
     const winnerClass = isWinner ? 'winner' : '';
+
+    const moveClass = value === 'X' ? 'x-move' : value === 'O' ? 'o-move' : ' ';
+
     return (
-        <button className={`square ${winnerClass} ${borderClasses}`} onClick={onSquareClick}>{value}</button>
+        <div className={`square ${winnerClass} ${borderClasses} ${moveClass}`} onClick={onSquareClick} />
     );
 }

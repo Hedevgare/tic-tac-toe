@@ -86,6 +86,10 @@ a {
 }
 
 .square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     background-color: #073642;
     color: #ffffff;
     border: 2px solid #ffffff;
@@ -99,7 +103,7 @@ a {
     width: 125px;
 }
 
-/* These classes need to come after .square so they override the default border width */
+/* These border classes need to come after .square so they override the default border width */
 .no-border-top {
     border-top-width: 0px;
 }
@@ -114,6 +118,38 @@ a {
 
 .no-border-left {
     border-left-width: 0px;
+}
+
+.o-move::before {
+    position: absolute;
+    content: '';
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    height: 70%;
+    width: 70%;
+    animation: moveO 0.25s cubic-bezier(0.35, 1.55, 0.65, 1) forwards;
+}
+
+.x-move::before {
+    position: absolute;
+    content: '';
+    background-color: #ffffff;
+    width: 5px;
+    height: 100%;
+    transform: rotate(45deg);
+    border-radius: 5px;
+    animation: moveXBefore 0.25s cubic-bezier(0.35, 1.55, 0.65, 1) forwards;
+}
+
+.x-move::after {
+    position: absolute;
+    content: '';
+    background-color: #ffffff;
+    width: 5px;
+    height: 100%;
+    transform: rotate(-45deg);
+    border-radius: 5px;
+    animation: moveXAfter 0.25s cubic-bezier(0.35, 1.55, 0.65, 1) forwards;
 }
 
 .winner {
@@ -162,6 +198,24 @@ a {
     margin-bottom: 40px;
 }
 
+/** Move animations */
+@keyframes moveO {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes moveXBefore {
+  0% { transform: scale(0.3) rotate(45deg); }
+  100% { transform: scale(1) rotate(45deg); }
+}
+
+@keyframes moveXAfter {
+  0% { transform: scale(0.3) rotate(-45deg); }
+  100% { transform: scale(1) rotate(-45deg); }
+}
+
+/** Responsive Design */
 @media screen and (max-width: 500px) {
     .menu {
         flex-direction: column;
