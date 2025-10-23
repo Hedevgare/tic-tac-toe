@@ -80,8 +80,8 @@ a {
     margin-top: 40px;
     font-size: 20px;
     padding: 10px 20px;
-    border: 1px solid #999;
-    border-radius: 25px;
+    border: 1px solid #ffffff;
+    border-radius: 15px;
     cursor: pointer;
 }
 
@@ -165,37 +165,23 @@ a {
 }
 
 .score-wrapper {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 20px;
-    align-items: center;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.score-wrapper p {
+    min-width: 80px;
+    text-align: center;
+    font-size: 25px;
 }
 
 .player-name {
     font-size: 20px;
-    margin: 0;
 }
 
-.player-name.left {
-    text-align: right;
-}
-
-.player-name.right {
-    text-align: left;
-}
-
-.status-score {
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    font-size: 40px;
-    margin: 0;
-}
-
-.status-info {
-    font-size: 25px;
-    margin-bottom: 40px;
+.player-active {
+    border-bottom: 2px dashed #ffffff;
 }
 
 /** Move animations */
@@ -230,16 +216,7 @@ a {
         width: 90px;
     }
 
-    .status-info {
-        font-size: 18px;
-        margin-bottom: 20px;
-    }
-
     .player-name {
-        font-size: 12px;
-    }
-
-    .status-score {
-        font-size: 20px;
+        font-size: 18px;
     }
 }

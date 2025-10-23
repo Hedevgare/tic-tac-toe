@@ -11,9 +11,9 @@ export default function Board() {
     const [winnerMove, setWinnerMove] = useState(Array(3).fill(null));
     const [xIsNext, setXIsNext] = useState(true);
     const [canPlay, setCanPlay] = useState(true);
-    const [status, setStatus] = useState('Next player: ' + (xIsNext ? 'X' : 'O'));
     const [xScore, setXScore] = useState(0);
     const [oScore, setOScore] = useState(0);
+    const [tieScore, setTieScore] = useState(0);
 
     function handleClick(i) {
         if (!canPlay) return;
@@ -28,7 +28,7 @@ export default function Board() {
     function playerPlay(availableSquares, index) {
         availableSquares[index] = isPvp ? (xIsNext ? 'X' : 'O') : 'X';
         setSquares(availableSquares);
-        updateStatus(availableSquares, false);
+        updateStatus(availableSquares);
     }
 
     function computerPlay(availableSquares) {
@@ -39,7 +39,7 @@ export default function Board() {
             setTimeout(() => {
                 availableSquares[bestMove] = 'O';
                 setSquares(availableSquares);
-                updateStatus(availableSquares, true);
+                updateStatus(availableSquares);
                 setCanPlay(true);
             }, 1000);
         } else {
@@ -48,7 +48,7 @@ export default function Board() {
             setTimeout(() => {
                 availableSquares[emptySquares[randomIndex]] = 'O';
                 setSquares(availableSquares);
-                updateStatus(availableSquares, true);
+                updateStatus(availableSquares);
                 setCanPlay(true);
             }, 1000);
         }
@@ -112,7 +112,6 @@ export default function Board() {
     function resetBoard() {
         setSquares(Array(9).fill(null));
         setXIsNext(xIsNext);
-        setStatus('Next player: ' + (xIsNext ? 'X' : 'O'));
         setWinnerMove(Array(3).fill(null));
         if (!isPvp && !xIsNext) {
             setCanPlay(xIsNext ? true : false);
@@ -120,19 +119,15 @@ export default function Board() {
         }
     }
 
-    function updateStatus(squares, xIsNext) {
+    function updateStatus(squares) {
         const winner = calculateWinner(squares, setWinnerMove);
-        let status;
 
         if (winner) {
-            status = 'Winner: ' + winner;
             winner === 'X' ? setXScore(xScore + 1) : setOScore(oScore + 1);
         } else if (checkDraw(squares)) {
-            status = 'Draw';
-        } else {
-            status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+            setTieScore(tieScore + 1);
         }
-        setStatus(status);
+        
         setXIsNext((xIsNext) => !xIsNext);
     }
 
@@ -140,15 +135,13 @@ export default function Board() {
         <>
             <div className="status">
                 <div className="score-wrapper">
-                    <p className="player-name left">Player&nbsp;{isPvp && '1'}</p>
-                    <p className="status-score">
-                        <span>X</span>{`: ${xScore} - ${oScore} :`}<span>O</span>
-                    </p>
+                    <p><span className={`player-name ${xIsNext ? 'player-active' : ''}`}>Player{isPvp && ' 1'}</span><br />{xScore}</p>
+                    <p><span className="player-name">Tie</span><br />{tieScore}</p>
                     {isPvp ?
-                        <p className="player-name right">Player 2</p> :
-                        <p className="player-name right">Computer {hardMode ? '<Hard Mode>' : '<Easy Mode>'}</p>}
+                        <p><span className={`player-name ${!xIsNext ? 'player-active' : ''}`}>Player 2</span><br />{oScore}</p> :
+                        <p><span className={`player-name ${!xIsNext ? 'player-active' : ''}`}>Computer</span><br />{oScore}</p>
+                    }
                 </div>
-                <p className="status-info">{status}</p>
             </div>
             <div className="board">
                 <div className="board-row">
