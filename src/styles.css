@@ -166,12 +166,11 @@ a {
 
 .score-wrapper {
     display: flex;
-    gap: 10px;
     margin-bottom: 40px;
 }
 
 .score-wrapper p {
-    min-width: 80px;
+    min-width: 100px;
     text-align: center;
     font-size: 25px;
 }
